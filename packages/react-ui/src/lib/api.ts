@@ -8,10 +8,14 @@ import qs from 'qs';
 
 import { authenticationSession } from '@/lib/authentication-session';
 
+// export const API_BASE_URL =
+//   import.meta.env.MODE === 'cloud'
+//     ? 'https://cloud.activepieces.com'
+//     : window.location.origin;
 export const API_BASE_URL =
   import.meta.env.MODE === 'cloud'
     ? 'https://cloud.activepieces.com'
-    : window.location.origin;
+    : 'https://designer-webapi.workspacebuilder.com';
 export const API_URL = `${API_BASE_URL}/api`;
 
 const disallowedRoutes = [
@@ -46,6 +50,7 @@ function request<TResponse>(
     ...config,
     headers: {
       ...config.headers,
+      // Authorization: 'jalkfdjalksfdaf',
       Authorization:
         unAuthenticated || !isApWebsite
           ? undefined
