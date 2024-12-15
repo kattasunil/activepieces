@@ -55,6 +55,7 @@ export const authenticationSession = {
   },
   logOut() {
     this.clearSession();
+    localStorage.setItem('projectRoutePath', location.pathname);
     window.location.href = '/sign-in';
   },
   getCurrentUser(): AuthenticationResponse | null {

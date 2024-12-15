@@ -54,6 +54,7 @@ const ChangePasswordForm = () => {
         description: t('Your password was changed successfully'),
         duration: 3000,
       });
+      localStorage.setItem('projectRoutePath', location.pathname);
       navigate('/sign-in');
     },
     onError: (error) => {

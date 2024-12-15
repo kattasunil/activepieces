@@ -27,6 +27,7 @@ const AcceptInvitation = () => {
           navigate(`/sign-up?email=${email}`);
         }, 3000);
       } else {
+        localStorage.setItem('projectRoutePath', location.pathname);
         navigate('/sign-in');
       }
     },

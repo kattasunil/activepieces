@@ -29,6 +29,7 @@ export default function ProjectSettingsLayout({
   const currentProjectId = authenticationSession.getProjectId();
   const { checkAccess } = useAuthorization();
   if (isNil(currentProjectId)) {
+    localStorage.setItem('projectRoutePath', location.pathname);
     return <Navigate to="/sign-in" replace />;
   }
   const sidebarNavItems: SidebarItem[] = [

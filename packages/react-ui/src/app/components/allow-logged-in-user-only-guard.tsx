@@ -37,12 +37,14 @@ export const AllowOnlyLoggedInUserOnlyGuard = ({
   const { reset } = useTelemetry();
 
   if (!authenticationSession.isLoggedIn()) {
+    localStorage.setItem('projectRoutePath', location.pathname);
     return <Navigate to="/sign-in" replace />;
   }
   const token = authenticationSession.getToken();
   if (!token || isJwtExpired(token)) {
     authenticationSession.logOut();
     reset();
+    localStorage.setItem('projectRoutePath', location.pathname);
     return <Navigate to="/sign-in" replace />;
   }
   projectHooks.prefetchProject();

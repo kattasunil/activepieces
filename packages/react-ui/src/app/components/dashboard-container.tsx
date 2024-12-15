@@ -28,6 +28,7 @@ export function DashboardContainer({ children }: DashboardContainerProps) {
   const { checkAccess } = useAuthorization();
 
   if (isNil(currentProjectId) || currentProjectId === '') {
+    localStorage.setItem('projectRoutePath', location.pathname);
     return <Navigate to="/sign-in" replace />;
   }
   const embedFilter = (link: SidebarLink) =>

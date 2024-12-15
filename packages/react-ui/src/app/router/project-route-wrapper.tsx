@@ -1,15 +1,15 @@
+import { ApEdition, ApFlagId, isNil } from '@activepieces/shared';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { t } from 'i18next';
 import React from 'react';
 import { useParams, Navigate, useSearchParams } from 'react-router-dom';
 
+import { authenticationSession } from '../../lib/authentication-session';
+
 import { useEmbedding } from '@/components/embed-provider';
 import { useToast } from '@/components/ui/use-toast';
 import { flagsHooks } from '@/hooks/flags-hooks';
 import { api } from '@/lib/api';
-import { ApEdition, ApFlagId, isNil } from '@activepieces/shared';
-
-import { authenticationSession } from '../../lib/authentication-session';
 
 const TokenCheckerWrapper: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -50,6 +50,7 @@ const TokenCheckerWrapper: React.FC<{ children: React.ReactNode }> = ({
   });
 
   if (isNil(currentProjectId) || isNil(projectId)) {
+    localStorage.setItem('projectRoutePath', location.pathname);
     return <Navigate to="/sign-in" replace />;
   }
 
@@ -76,6 +77,7 @@ const RedirectToCurrentProjectRoute: React.FC<
   const [searchParams] = useSearchParams();
   const { embedState } = useEmbedding();
   if (isNil(currentProjectId)) {
+    localStorage.setItem('projectRoutePath', location.pathname);
     return <Navigate to="/sign-in" replace />;
   }
   if (embedState.isEmbedded) {

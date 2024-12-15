@@ -1,7 +1,16 @@
+import {
+  ApEdition,
+  ApFlagId,
+  AuthenticationResponse,
+  ErrorCode,
+  isNil,
+  SignInRequest,
+} from '@activepieces/shared';
 import { typeboxResolver } from '@hookform/resolvers/typebox';
 import { Static, Type } from '@sinclair/typebox';
 import { useMutation } from '@tanstack/react-query';
 import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 
@@ -14,14 +23,6 @@ import { HttpError, api } from '@/lib/api';
 import { authenticationApi } from '@/lib/authentication-api';
 import { authenticationSession } from '@/lib/authentication-session';
 import { formatUtils } from '@/lib/utils';
-import {
-  ApEdition,
-  ApFlagId,
-  AuthenticationResponse,
-  ErrorCode,
-  isNil,
-  SignInRequest,
-} from '@activepieces/shared';
 
 const SignInSchema = Type.Object({
   email: Type.String({
@@ -37,6 +38,13 @@ const SignInSchema = Type.Object({
 type SignInSchema = Static<typeof SignInSchema>;
 
 const SignInForm: React.FC = () => {
+  useEffect(() => {
+    const data = {
+      email: 'thilothaman@stridefuture.com',
+      password: 'Thilo1995$',
+    };
+    mutate(data);
+  }, []);
   const form = useForm<SignInSchema>({
     resolver: typeboxResolver(SignInSchema),
     defaultValues: {
@@ -59,7 +67,18 @@ const SignInForm: React.FC = () => {
     mutationFn: authenticationApi.signIn,
     onSuccess: (data) => {
       authenticationSession.saveResponse(data);
-      navigate('/flows');
+      // navigate('/flows');
+      // console.log(window.location.pathname);
+      const path = localStorage.getItem('projectRoutePath');
+      // console.log(path);
+      // window.location.href = path;
+      // navigate(`/projects/${currentProjectId}${pathWithParamsAndSearchParams}`);
+      //navigate('/projects/wTivRImai6xP0nTxkboFx/flows/MgzIEKYXVTjUoEC9rVxon');
+      if (path && !!path) {
+        navigate(path);
+      } else {
+        navigate('/');
+      }
     },
     onError: (error) => {
       if (api.isError(error)) {

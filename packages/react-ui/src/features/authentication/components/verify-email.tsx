@@ -29,6 +29,7 @@ const VerifyEmail = () => {
       });
     },
     onSuccess: () => {
+      localStorage.setItem('projectRoutePath', location.pathname);
       setTimeout(() => navigate('/sign-in'), 3000);
     },
     onError: (error) => {
@@ -37,16 +38,19 @@ const VerifyEmail = () => {
         error.response?.status === HttpStatusCode.Gone
       ) {
         setIsExpired(true);
+        localStorage.setItem('projectRoutePath', location.pathname);
         setTimeout(() => navigate('/sign-in'), 3000);
       } else {
         console.error(error);
         toast(INTERNAL_ERROR_TOAST);
+        localStorage.setItem('projectRoutePath', location.pathname);
         setTimeout(() => navigate('/sign-in'), 3000);
       }
     },
   });
 
   if (!otp || !userId) {
+    localStorage.setItem('projectRoutePath', location.pathname);
     return <Navigate to="/sign-in" replace />;
   }
   return (

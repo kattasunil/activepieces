@@ -50,7 +50,6 @@ function request<TResponse>(
     ...config,
     headers: {
       ...config.headers,
-      // Authorization: 'jalkfdjalksfdaf',
       Authorization:
         unAuthenticated || !isApWebsite
           ? undefined
