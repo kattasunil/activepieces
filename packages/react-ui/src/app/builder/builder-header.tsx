@@ -204,7 +204,7 @@ export const BuilderHeader = () => {
           )}
 
           <BuilderPublishButton></BuilderPublishButton>
-          <UserAvatar></UserAvatar>
+          {/* <UserAvatar></UserAvatar> */}
         </div>
       </div>
     </div>
