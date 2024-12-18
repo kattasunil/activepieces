@@ -114,6 +114,25 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: 'rlig' 1, 'calt' 1;
+
+    .bg-background{
+      background-color: #f7f9ff;
+    }
+    .data-\[state\=checked\]\:bg-primary[data-state=checked] {
+      /* background-color: hsl(var(--primary)); */
+      background-color: #1c2d8a;
+    }
+    .bg-primary {
+      /* background-color: hsl(var(--primary)); */
+      background-color: #1c2d8a;
+    }
+    .border-primary, .hover\:border-primary:hover {
+      /* border-color: hsl(var(--primary)); */
+      border-color: #1c2d8a;
+    }
+    .h-\[70px\] {
+      height: 50px;
+    }
   }
 }
 

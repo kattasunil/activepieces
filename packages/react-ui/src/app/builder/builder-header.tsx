@@ -142,11 +142,11 @@ export const BuilderHeader = () => {
         </div>
         {!embedState.hideLogoInBuilder && (
           <div className="absolute absolute w-full h-full left-0 top-0 flex items-center justify-center p-4 pointer-events-none">
-            <img
+            {/* <img
               className="h-8 object-contain"
               src={branding.logos.fullLogoUrl}
               alt={branding.websiteName}
-            ></img>
+            ></img> */}
           </div>
         )}
 
