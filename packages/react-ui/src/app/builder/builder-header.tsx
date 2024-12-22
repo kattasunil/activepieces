@@ -1,3 +1,9 @@
+import {
+  ApFlagId,
+  FlowVersionState,
+  Permission,
+  supportUrl,
+} from '@activepieces/shared';
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons';
 import { t } from 'i18next';
 import { ChevronDown, History, Home, Logs } from 'lucide-react';
@@ -8,6 +14,10 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
+
+import FlowActionMenu from '../components/flow-actions-menu';
+
+import { BuilderPublishButton } from './builder-publish-button';
 
 import {
   LeftSideBarType,
@@ -25,16 +35,6 @@ import { UserAvatar } from '@/components/ui/user-avatar';
 import { foldersHooks } from '@/features/folders/lib/folders-hooks';
 import { useAuthorization } from '@/hooks/authorization-hooks';
 import { flagsHooks } from '@/hooks/flags-hooks';
-import {
-  ApFlagId,
-  FlowVersionState,
-  Permission,
-  supportUrl,
-} from '@activepieces/shared';
-
-import FlowActionMenu from '../components/flow-actions-menu';
-
-import { BuilderPublishButton } from './builder-publish-button';
 
 export const BuilderHeader = () => {
   const navigate = useNavigate();
@@ -78,7 +78,10 @@ export const BuilderHeader = () => {
   return (
     <div className="bg-background ">
       <div className="relative items-left flex h-[70px] w-full p-4 bg-muted/50 border-b">
-        <div className="flex h-full items-center justify-center gap-2">
+        <div
+          className="flex h-full items-center justify-center gap-2"
+          style={{ visibility: 'hidden' }}
+        >
           {!embedState.disableNavigationInBuilder && (
             <Tooltip>
               <TooltipTrigger asChild>
@@ -139,30 +142,32 @@ export const BuilderHeader = () => {
         </div>
         {!embedState.hideLogoInBuilder && (
           <div className="absolute absolute w-full h-full left-0 top-0 flex items-center justify-center p-4 pointer-events-none">
-            <img
+            {/* <img
               className="h-8 object-contain"
               src={branding.logos.fullLogoUrl}
               alt={branding.websiteName}
-            ></img>
+            ></img> */}
           </div>
         )}
 
         <div className="grow "></div>
         <div className="flex items-center justify-center gap-4">
           {showSupport && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="gap-2 px-2"
-                  onClick={() => openNewWindow(supportUrl)}
-                >
-                  <QuestionMarkCircledIcon className="w-4 h-4"></QuestionMarkCircledIcon>
-                  {t('Support')}
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side="bottom">{t('Support')}</TooltipContent>
-            </Tooltip>
+            <div style={{ visibility: 'hidden' }}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="gap-2 px-2"
+                    onClick={() => openNewWindow(supportUrl)}
+                  >
+                    <QuestionMarkCircledIcon className="w-4 h-4"></QuestionMarkCircledIcon>
+                    {t('Support')}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">{t('Support')}</TooltipContent>
+              </Tooltip>
+            </div>
           )}
           {hasPermissionToReadRuns && (
             <Tooltip>
@@ -199,7 +204,7 @@ export const BuilderHeader = () => {
           )}
 
           <BuilderPublishButton></BuilderPublishButton>
-          <UserAvatar></UserAvatar>
+          {/* <UserAvatar></UserAvatar> */}
         </div>
       </div>
     </div>
