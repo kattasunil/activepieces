@@ -45,7 +45,7 @@ export const BuilderHeader = () => {
   );
   const branding = flagsHooks.useWebsiteBranding();
   const isInRunsPage = useMemo(
-    () => location.pathname.startsWith('/runs'),
+    () => location.pathname.includes('/runs'),
     [location.pathname],
   );
   const hasPermissionToReadRuns = useAuthorization().checkAccess(
@@ -72,11 +72,11 @@ export const BuilderHeader = () => {
   const isLatestVersion =
     flowVersion.state === FlowVersionState.DRAFT ||
     flowVersion.id === flow.publishedVersionId;
-
   const folderName = folderData?.displayName ?? t('Uncategorized');
+  const defaultRoute = determineDefaultRoute(useAuthorization().checkAccess);
 
   return (
-    <div className="bg-background ">
+    <div className="bg-background select-none">
       <div className="relative items-left flex h-[70px] w-full p-4 bg-muted/50 border-b">
         <div
           className="flex h-full items-center justify-center gap-2"
@@ -85,7 +85,7 @@ export const BuilderHeader = () => {
           {!embedState.disableNavigationInBuilder && (
             <Tooltip>
               <TooltipTrigger asChild>
-                <Link to="/flows">
+                <Link to={defaultRoute}>
                   <Button variant="ghost" size={'icon'}>
                     <Home className="h-4 w-4" />
                   </Button>
@@ -102,7 +102,10 @@ export const BuilderHeader = () => {
                     <TooltipTrigger
                       onClick={() =>
                         navigate({
-                          pathname: '/flows',
+                          pathname:
+                            authenticationSession.appendProjectRoutePrefix(
+                              '/flows',
+                            ),
                           search: createSearchParams({
                             folderId: folderData?.id ?? 'NULL',
                           }).toString(),

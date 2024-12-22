@@ -66,7 +66,7 @@ const FlowRunsPage = () => {
       const createdBefore = searchParams.get('createdBefore');
 
       return flowRunsApi.list({
-        status: status ? status.map((s) => s as FlowRunStatus) : undefined,
+        status: status ?? undefined,
         projectId: authenticationSession.getProjectId()!,
         flowId,
         cursor: cursor ?? undefined,
@@ -99,8 +99,6 @@ const FlowRunsPage = () => {
           onCheckedChange={(value) => {
             const isChecked = !!value;
             table.toggleAllPageRowsSelected(isChecked);
-            console.log('isChecked', isChecked);
-
             if (isChecked) {
               const allRows = table.getRowModel().rows.map((row) => ({
                 id: row.original.id,
@@ -378,9 +376,13 @@ const FlowRunsPage = () => {
   const handleRowClick = useCallback(
     (row: FlowRun, newWindow: boolean) => {
       if (newWindow) {
-        openNewWindow(`/runs/${row.id}`);
+        openNewWindow(
+          authenticationSession.appendProjectRoutePrefix(`/runs/${row.id}`),
+        );
       } else {
-        navigate(`/runs/${row.id}`);
+        navigate(
+          authenticationSession.appendProjectRoutePrefix(`/runs/${row.id}`),
+        );
       }
     },
     [navigate, openNewWindow],
